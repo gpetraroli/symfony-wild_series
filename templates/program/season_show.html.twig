@@ -4,9 +4,9 @@
 
 {% block body %}
     <div class="container d-flex flex-column align-items-center mt-5">
-        <a class="text-white align-self-start mb-5" href="{{ path('program_index') }}">
-                    Back to tv shows
+        <a class="text-white align-self-start mb-5" href="{{ path('program_show', {id: program.id}) }}">
+            Back to show details
         </a>
-        {% include 'components/program/_programFull.html.twig' %}
+        {% include 'components/season/_season.htm.twig' %}
     </div>
 {% endblock %}

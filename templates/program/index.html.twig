@@ -3,18 +3,17 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.synopsis }}</p>
-            <a href="{{ path('program_show', {id: program.id}) }}">more...</a>
+    <div class="container-fluid">
+        <h1 class="text-white">All TV shows</h1>
+        <a class="text-white" href="{{ path('app_index') }}">
+            Back to home
+        </a>
+        <div class="container-fluid d-flex justify-content-center align-items-start gap-5">
+            {% for program in programs %}
+                {% include 'components/program/_programPreview.html.twig' %}
+            {% else %}
+                Unable to find series
+            {% endfor %}
         </div>
-    {% else %}
-        Aucune série trouvée.
-    {% endfor %}
-
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+    </div>
 {% endblock %}

@@ -1,0 +1,7 @@
+<div class="card bg-dark bg-gradient mt-5" style="width: 18rem;">
+    <img src="{{ program.poster }}" class="card-img-top" alt="{{ program.title }}">
+    <div class="card-body shadow-lg">
+        <h5 class="card-text text-white">{{ program.title }}</h5>
+        <a href="{{ path('program_show', {id: program.id}) }}" class="link-info">more infos</a>
+    </div>
+</div>
