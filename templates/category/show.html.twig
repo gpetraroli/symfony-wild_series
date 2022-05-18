@@ -6,15 +6,15 @@
     <h1>Toutes les séries de la table program : </h1>
     {% for program in programs %}
         <div>
-            <h2>{{ loop.index }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+            <h2>{{ program.id }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
             <p>{{ program.synopsis }}</p>
             <a href="{{ path('program_show', {id: program.id}) }}">more...</a>
         </div>
     {% else %}
-        Aucune série trouvée.
+        No Tv shows were found
     {% endfor %}
 
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
+    <a href="{{ path('category_index') }}">
+        Back to categories
     </a>
 {% endblock %}

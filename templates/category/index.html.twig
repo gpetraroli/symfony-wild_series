@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All programs{% endblock %}
+
+{% block body %}
+    <h1>All categories : </h1>
+    {% for category in categories %}
+        <div>
+            <a href="{{ path('category_show', {categoryName: category.name}) }}"><h2>{{ category.name }}</h2></a>
+        </div>
+    {% else %}
+        No categories found.
+    {% endfor %}
+
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+{% endblock %}
