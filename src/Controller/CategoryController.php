@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\CategoryRepository;
-use App\Repository\ProgramRepository;
+use App\Entity\Category;
+use App\Entity\Program;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -12,23 +13,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class CategoryController extends AbstractController
 {
     #[Route('/', name: 'index', methods: ['GET'])]
-    public function index(CategoryRepository $repository): Response
+    public function index(ManagerRegistry $doctrine): Response
     {
-        $categories = $repository->findAll();
+        $categories = $doctrine->getRepository(Category::class)->findAll();
 
         return $this->render('category/index.html.twig', ['categories' => $categories]);
     }
 
     #[Route('/{categoryName}', name: 'show', methods: ['GET'])]
-    public function show(CategoryRepository $categoryRepository, ProgramRepository $programRepository, $categoryName): Response
+    public function show(ManagerRegistry $doctrine, $categoryName): Response
     {
-        $category = $categoryRepository->findOneBy(['name' => $categoryName]);
+        $category = $doctrine->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
 
         if (!$category) {
             throw $this->createNotFoundException('Category "' . $categoryName . '" was not found.');
         }
 
-        $programs = $programRepository->findBy(
+        $programs = $doctrine->getRepository(Program::class)->findBy(
             ['category' => $category->getId()],
             ['id' => 'DESC'],
             3

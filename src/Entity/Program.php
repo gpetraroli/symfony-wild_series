@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ProgramRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ProgramRepository::class)]
@@ -22,7 +23,7 @@ class Program
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $poster;
 
-    #[ORM\ManyToOne(targetEntity: Category::class)]
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: "programs")]
     #[ORM\JoinColumn(nullable: false)]
     private $category;
 
@@ -77,5 +78,10 @@ class Program
         $this->category = $category;
 
         return $this;
+    }
+
+    public function getPrograms(): ArrayCollection
+    {
+        return $this->programs;
     }
 }
