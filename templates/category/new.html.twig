@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}All programs{% endblock %}
+
+{% block body %}
+    <h1>Add new category: </h1>
+
+    <a href="{{ path('app_index') }}">
+        Retour à l'accueil
+    </a>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <button type="submit">Add category</button>
+    {{ form_end(form) }}
+{% endblock %}

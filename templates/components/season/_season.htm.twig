@@ -8,11 +8,19 @@
         </div>
         <div>
             <h2>Season {{ season.number }}</h2>
+            <p>{{ episodes|length }} episodes</p>
             <ul class="list-group list-group-flush list-group-numbered mb-3 rounded">
                 {% for episode in episodes %}
-                    <li class="list-group-item bg-dark text-white">
+                <li class="list-group-item bg-dark text-white">
+                    <a class="text-white"
+                       href="{{ path('program_episode_show',{
+                           programId: program.id,
+                           seasonId: season.id,
+                           episodeId: episode.id,})
+                       }}">
                         {{ episode.title }}
-                    </li>
+                    </a>
+                </li>
                 {% endfor %}
             </ul>
         </div>

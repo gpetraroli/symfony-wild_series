@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add new program{% endblock %}
+
+{% block body %}
+    <div class="container-fluid text-white">
+        <h1 class="text-white">All TV shows</h1>
+        <a class="text-white" href="{{ path('app_index') }}">
+            Back to home
+        </a>
+        <div class="container d-flex align-items-start gap-5">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit">Add program</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+{% endblock %}

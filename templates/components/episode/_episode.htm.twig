@@ -4,17 +4,12 @@
             <img class="float-start pe-3 pb-3" src="{{program.poster}}" alt="{{ program.title }} poster">
             <h1 class="card-title">{{ program.title }}</h1>
             <p class="card-text">{{ program.category.name }}</p>
-            <p class="card-text">{{ seasons|length }} seasons</p>
             <p class="card-text">{{ program.synopsis }}</p>
         </div>
         <div>
-            <ul class="list-group list-group-flush mb-3 rounded">
-                {% for season in seasons %}
-                    <li class="list-group-item bg-dark">
-                        <a class="text-white" href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">Season {{ season.number }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
+            <h2>{{ episode.title }}</h2>
+            <p>Season {{ season.number }} - Episode {{ episode.number }}</p>
+            <p>{{ episode.synopsis }}</p>
         </div>
     </div>
 </div>
