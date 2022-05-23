@@ -67,12 +67,12 @@ class Episode
         return $this;
     }
 
-    public function getSeasonId(): ?Season
+    public function getSeason(): ?Season
     {
         return $this->season;
     }
 
-    public function setSeasonId(?Season $season): self
+    public function setSeason(?Season $season): self
     {
         $this->season = $season;
 
