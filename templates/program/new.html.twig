@@ -9,9 +9,29 @@
             Back to home
         </a>
         <div class="container d-flex align-items-start gap-5">
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button type="submit">Add program</button>
+            {{ form_start(form, { 'attr': {'class': 'w-100'} }) }}
+            <div class="row flex-column">
+                <div class="col">
+                    <p>{{ form_label(form.title) }}</p>
+                    {{ form_errors(form.title) }}
+                    {{ form_widget(form.title, { 'attr': {'class': 'col-6 p-2 mb-5'} }) }}
+                </div>
+                <div class="col">
+                    <p>{{ form_label(form.synopsis) }}</p>
+                    {{ form_widget(form.synopsis, { 'attr': {'class': 'w-100 p-2 mb-5'} }) }}
+                </div>
+                <div class="col">
+                    <p>{{ form_label(form.poster) }}</p>
+                    {{ form_widget(form.poster, { 'attr': {'class': 'col-6 p-2 mb-5'} }) }}
+                </div>
+                <div class="col">
+                    <p>{{ form_label(form.category) }}</p>
+                    {{ form_widget(form.category, { 'attr': {'class': 'p-2 mb-5'} }) }}
+                </div>
+                <div class="col">
+                    <button class="p-2" type="submit">Add program</button>
+                </div>
+            </div>
             {{ form_end(form) }}
         </div>
     </div>
