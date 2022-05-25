@@ -6,6 +6,14 @@
             <p class="card-text">{{ program.category.name }}</p>
             <p class="card-text">{{ seasons|length }} seasons</p>
             <p class="card-text">{{ program.synopsis }}</p>
+            <strong>Actors:</strong>
+            <p>
+                {% for actor in program.actors %}
+                    <span>{{ actor.name }}{% if not loop.last %}{{ ', ' }}{% endif%} </span>
+                {% else %}
+                    <span>No actors found</span>
+                {% endfor %}
+            </p>
         </div>
         <div>
             <ul class="list-group list-group-flush mb-3 rounded">
