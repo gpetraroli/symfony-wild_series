@@ -23,8 +23,8 @@
                 <td>{{ episode.number }}</td>
                 <td>{{ episode.synopsis }}</td>
                 <td>
-                    <a class="text-info" href="{{ path('app_episode_show', {'id': episode.id}) }}">show</a>
-                    <a class="text-info" href="{{ path('app_episode_edit', {'id': episode.id}) }}">edit</a>
+                    <a class="text-info" href="{{ path('app_episode_show', {'slug': episode.slug}) }}">show</a>
+                    <a class="text-info" href="{{ path('app_episode_edit', {'slug': episode.slug}) }}">edit</a>
                 </td>
             </tr>
         {% else %}

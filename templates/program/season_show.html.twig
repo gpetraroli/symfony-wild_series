@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="container d-flex flex-column align-items-center mt-5">
-        <a class="text-white align-self-start mb-5" href="{{ path('program_show', {id: program.id}) }}">
+        <a class="text-white align-self-start mb-5" href="{{ path('program_show', {slug: program.slug}) }}">
             Back to show details
         </a>
         {% include 'components/season/_season.htm.twig' %}

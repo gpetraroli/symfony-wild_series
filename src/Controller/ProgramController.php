@@ -37,9 +37,9 @@ class ProgramController extends AbstractController
 
         $form->handleRequest($request);
 
-//        $program->setSlug($slugify->generate($program->getTitle());
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $program->setSlug($slugify->generate($program->getTitle()));
             $programRepository->add($program, true);
 
             return $this->redirectToRoute('program_index');
@@ -48,7 +48,7 @@ class ProgramController extends AbstractController
         return $this->renderForm('program/new.html.twig', ['form' => $form]);
     }
 
-    #[Route('/program/{id<\d+>}', name: 'program_show', methods: ['GET'])]
+    #[Route('/program/{slug}', name: 'program_show', methods: ['GET'])]
     public function show(Program $program): Response
     {
         // using param converter to retrieve $program
@@ -66,7 +66,7 @@ class ProgramController extends AbstractController
             ]);
     }
 
-    #[Route('/program/{programId}/season/{seasonId<\d+>}', name: 'program_season_show', methods: ['GET'])]
+    #[Route('program/{programId}/season/{seasonId<\d+>}', name: 'program_season_show', methods: ['GET'])]
     #[Entity('program', options: ['id' => 'programId'])]
     #[Entity('season', options: ['id' => 'seasonId'])]
     public function showSeason(Program $program, Season $season): Response
