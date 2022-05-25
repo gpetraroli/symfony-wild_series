@@ -21,7 +21,9 @@ class ProgramController extends AbstractController
     {
         $programs = $doctrine->getRepository(Program::class)->findAll();
 
-        return $this->render('program/index.html.twig', ['programs' => $programs]);
+        return $this->render('program/index.html.twig', [
+            'programs' => $programs,
+            ]);
     }
 
     #[Route('/program/new', name: 'program_new', methods: ['GET', 'POST'])]

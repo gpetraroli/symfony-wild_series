@@ -8,7 +8,7 @@
         <a class="text-white" href="{{ path('app_index') }}">
             Back to home
         </a>
-        <div class="container-fluid d-flex justify-content-center align-items-start gap-5">
+        <div class="container-fluid d-flex justify-content-center align-items-start gap-5 flex-wrap">
             {% for program in programs %}
                 {% include 'components/program/_programPreview.html.twig' %}
             {% else %}
