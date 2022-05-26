@@ -10,7 +10,7 @@
         <h1 class="text-white">All TV shows</h1>
         <div class="container-fluid d-flex justify-content-center align-items-start gap-5 flex-wrap">
             {% for program in programs %}
-                {% include 'components/program/_programPreview.html.twig' %}
+                {% include 'program/_programPreview.html.twig' %}
             {% else %}
                 Unable to find series
             {% endfor %}
