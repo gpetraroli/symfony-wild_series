@@ -3,18 +3,23 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>Toutes les séries de la table program : </h1>
-    {% for program in programs %}
-        <div>
-            <h2>{{ program.id }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
-            <p>{{ program.synopsis }}</p>
-            <a href="{{ path('program_show', {id: program.id}) }}">more...</a>
-        </div>
-    {% else %}
-        No Tv shows were found
-    {% endfor %}
+    <div class="container text-white d-flex flex-column gap-5">
+        <a class="link-info" href="{{ path('category_index') }}">
+            Back to categories
+        </a>
 
-    <a href="{{ path('category_index') }}">
-        Back to categories
-    </a>
+        <h1>All {{ category }} shows</h1>
+        {% for program in programs %}
+            <div class="d-flex gap-3">
+                <img src="{{ program.poster }}" style="height: 10rem">
+                <div>
+                    <h2>{{ program.id }} / {{ program.title }} - Catégorie : {{ program.category.name }}</h2>
+                    <p>{{ program.synopsis }}</p>
+                    <a class="link-info" href="{{ path('program_show', {slug: program.slug}) }}">more...</a>
+                </div>
+            </div>
+        {% else %}
+            No Tv shows were found
+        {% endfor %}
+    </div>
 {% endblock %}

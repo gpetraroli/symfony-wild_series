@@ -3,11 +3,11 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <h1 class="text-white">All TV shows</h1>
-        <a class="text-white" href="{{ path('app_index') }}">
+    <div class="container-fluid d-flex flex-column gap-5">
+        <a class="link-info" href="{{ path('app_index') }}">
             Back to home
         </a>
+        <h1 class="text-white">All TV shows</h1>
         <div class="container-fluid d-flex justify-content-center align-items-start gap-5 flex-wrap">
             {% for program in programs %}
                 {% include 'components/program/_programPreview.html.twig' %}

@@ -1,0 +1,10 @@
+{% extends 'baseEmail.html.twig' %}
+
+{% block body %}
+    <p>Hello {{ user }}, a new episode of <strong>{{ program.title }}</strong> is out! Click
+        <a href="http://localhost:8000/program/{{ program.id }}/season/{{ season.id }}/episode/{{ episode.id }}">
+            here
+        </a>
+        to watch.</p>
+    {% include 'components/episode/_episode.htm.twig' %}
+{% endblock %}

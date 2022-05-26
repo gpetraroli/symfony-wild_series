@@ -1,0 +1,7 @@
+{% extends 'baseEmail.html.twig' %}
+
+{% block body %}
+    <h1>{{ program.title }} is out!</h1>
+
+    <p>Hello {{ user }}, {{ program.title }} is ready to be watched!</p>
+{% endblock %}

@@ -3,12 +3,12 @@
 {% block title %}Add new program{% endblock %}
 
 {% block body %}
-    <div class="container-fluid text-white">
-        <h1 class="text-white">All TV shows</h1>
-        <a class="text-white" href="{{ path('app_index') }}">
+    <div class="container text-white d-flex flex-column gap-5">
+        <a class="link-info" href="{{ path('app_index') }}">
             Back to home
         </a>
-        <div class="container d-flex align-items-start gap-5">
+        <h1 class="text-white">All TV shows</h1>
+        <div class="d-flex align-items-start gap-5">
             {{ form_start(form, { 'attr': {'class': 'w-100'} }) }}
             <div class="row flex-column">
                 <div class="col">
@@ -29,7 +29,18 @@
                     {{ form_widget(form.category, { 'attr': {'class': 'p-2 mb-5'} }) }}
                 </div>
                 <div class="col">
-                    <button class="p-2" type="submit">Add program</button>
+                    <p>{{ form_label(form.actors) }}</p>
+                    <div class="d-flex gap-3 flex-wrap mb-5">
+                        {% for child in form.actors %}
+                            <div>
+                                {{ form_widget(child) }}
+                                {{ form_label(child) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col">
+                    <button class="btn btn-outline-info p-2" type="submit">Add program</button>
                 </div>
             </div>
             {{ form_end(form) }}

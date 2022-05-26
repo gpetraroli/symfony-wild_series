@@ -3,8 +3,8 @@
 {% block title %}{{ program.title }}{% endblock %}
 
 {% block body %}
-    <div class="container d-flex flex-column align-items-center mt-5">
-        <a class="text-white align-self-start mb-5" href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">
+    <div class="container d-flex flex-column align-items-center mt-5 gap-5">
+        <a class="link-info align-self-start mb-5" href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">
             Back to season
         </a>
         {% include 'components/episode/_episode.htm.twig' %}

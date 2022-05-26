@@ -46,7 +46,9 @@ class CategoryController extends AbstractController
     #[Route('/{categoryName}', name: 'show', methods: ['GET'])]
     public function show(ManagerRegistry $doctrine, $categoryName): Response
     {
-        $category = $doctrine->getRepository(Category::class)->findOneBy(['name' => $categoryName]);
+        $category = $doctrine->getRepository(Category::class)->findOneBy([
+            'name' => $categoryName
+        ]);
 
         if (!$category) {
             throw $this->createNotFoundException('Category "' . $categoryName . '" was not found.');
@@ -58,6 +60,6 @@ class CategoryController extends AbstractController
             3
         );
 
-        return $this->render('category/show.html.twig', ['programs' => $programs]);
+        return $this->render('category/show.html.twig', ['programs' => $programs, 'category' => $categoryName,]);
     }
 }

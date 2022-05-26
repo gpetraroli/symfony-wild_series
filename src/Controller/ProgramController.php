@@ -14,6 +14,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ProgramController extends AbstractController
@@ -29,7 +31,7 @@ class ProgramController extends AbstractController
     }
 
     #[Route('/program/new', name: 'program_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, ProgramRepository $programRepository, Slugify $slugify): Response
+    public function new(Request $request, ProgramRepository $programRepository, MailerInterface $mailer, Slugify $slugify): Response
     {
         $program = new Program();
 
@@ -41,6 +43,19 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $program->setSlug($slugify->generate($program->getTitle()));
             $programRepository->add($program, true);
+
+            $userEmail = 'user@email.com';
+            $email = (new Email())
+                ->from('your_email@example.com')
+                ->to($userEmail)
+                ->subject('A new tv series is avaible')
+                ->text('Sending emails is fun again!')
+                ->html($this->renderView('program/newProgramEmail.html.twig', [
+                    'program' => $program,
+                    'user' => $userEmail,
+                ]));
+
+            $mailer->send($email);
 
             return $this->redirectToRoute('program_index');
         }
@@ -94,7 +109,7 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/program/{id}/edit', name: 'program_edit', methods: ['GET', 'POST'])]
+    #[Route('/program/{slug}/edit', name: 'program_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Program $program, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ProgramType::class, $program);

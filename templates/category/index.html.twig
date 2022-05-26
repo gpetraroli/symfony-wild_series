@@ -3,16 +3,22 @@
 {% block title %}All programs{% endblock %}
 
 {% block body %}
-    <h1>All categories : </h1>
-    {% for category in categories %}
-        <div>
-            <a href="{{ path('category_show', {categoryName: category.name}) }}"><h2>{{ category.name }}</h2></a>
+    <div class="container d-flex flex-column gap-5">
+        <a class='link-info' href="{{ path('app_index') }}">
+            Retour à l'accueil
+        </a>
+        <h1 class="text-white">All categories : </h1>
+        <div class="container d-flex justify-content-center gap-3 flex-wrap">
+            {% for category in categories %}
+                <div class="border p-3">
+                    <a class='link-info' href="{{ path('category_show', {categoryName: category.name}) }}"><h2>{{ category.name }}</h2></a>
+                </div>
+            {% else %}
+                No categories found.
+            {% endfor %}
         </div>
-    {% else %}
-        No categories found.
-    {% endfor %}
-
-    <a href="{{ path('app_index') }}">
-        Retour à l'accueil
-    </a>
+        <a class='link-info' href="{{ path('category_new') }}">
+            add new categort
+        </a>
+    </div>
 {% endblock %}
