@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-transparent border-bottom border-dark shadow-lg pt-3 pb-3 mb-5">
-    <div class="container">
+    <div class="container gap-3">
         <a class="navbar-brand text-white" href="/">Wild series</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -21,5 +21,12 @@
                 <button class="btn btn-outline-light" type="submit">Search</button>
             </form>
         </div>
+        {% if app.user %}
+            {{ app.user.email }}
+            <a class="text-info" href="{{ path('app_logout') }}"> Logout</a>
+        {% else %}
+            <a class="text-info" href="{{ path('app_login') }}"> Login</a>
+        {% endif %}
+
     </div>
 </nav>

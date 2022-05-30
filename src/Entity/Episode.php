@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\EpisodeRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EpisodeRepository::class)]
@@ -28,6 +29,9 @@ class Episode
 
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
+
+    #[ORM\OneToMany(mappedBy: 'episode', targetEntity: Comment::class)]
+    private $comments;
 
     public function getId(): ?int
     {
@@ -90,6 +94,23 @@ class Episode
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getComments(): ?Collection
+    {
+        return $this->comments;
+    }
+
+    public function setComments(Comment $comments): self
+    {
+        // set the owning side of the relation if necessary
+        if ($comments->getEpisode() !== $this) {
+            $comments->setEpisode($this);
+        }
+
+        $this->comments = $comments;
 
         return $this;
     }

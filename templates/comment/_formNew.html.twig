@@ -1,0 +1,20 @@
+<div class="card bg-dark bg-gradient shadow-lg" style="width: 50rem;">
+    <div class="card-body d-flex flex-column text-white">
+        <p>Leave a comment</p>
+        {{ form_start(form, { 'attr': {'class': 'w-100 d-flex flex-column gap-3'} }) }}
+        <div class="col d-flex align-items-center">
+            {{ form_label(form.rate) }}
+            {{ form_errors(form.rate) }}
+            {{ form_widget(form.rate, { 'attr': {'class': 'd-flex gap-2 p-2 align-items-center'} }) }}
+        </div>
+        <div class="col">
+            <p>{{ form_label(form.body) }}</p>
+            {{ form_errors(form.body) }}
+            {{ form_widget(form.body, { 'attr': {'class': 'w-100 p-2 rouded'} }) }}
+        </div>
+        <div class="col">
+            <button class="p-2 btn btn-outline-info" type="submit">Comment</button>
+        </div>
+        {{ form_end(form) }}
+    </div>
+</div>

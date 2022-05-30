@@ -3,10 +3,20 @@
 {% block title %}{{ program.title }}{% endblock %}
 
 {% block body %}
-    <div class="container d-flex flex-column align-items-center mt-5 gap-5">
+    <div class="container d-flex flex-column align-items-center mt-5 gap-4">
         <a class="link-info align-self-start mb-5" href="{{ path('program_season_show', {programId: program.id, seasonId: season.id}) }}">
             Back to season
         </a>
         {% include 'episode/_episode.htm.twig' %}
+
+        {% if app.user %}
+            {% include 'comment/_formNew.html.twig' %}
+        {% endif %}
+
+        {% for comment in comments %}
+
+            {% include 'comment/comment.html.twig' %}
+
+        {% endfor %}
     </div>
 {% endblock %}

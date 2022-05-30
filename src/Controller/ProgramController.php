@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Episode;
 use App\Entity\Program;
 use App\Entity\Season;
+use App\Form\CommentType;
 use App\Form\ProgramType;
+use App\Repository\CommentRepository;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
 use Doctrine\ORM\EntityManagerInterface;
@@ -96,16 +99,36 @@ class ProgramController extends AbstractController
         ]);
     }
 
-    #[Route('/program/{programId}/season/{seasonId}/episode/{episodeId}', name: 'program_episode_show', methods: ['GET'])]
+    #[Route('/program/{programId}/season/{seasonId}/episode/{episodeId}', name: 'program_episode_show', methods: ['GET', 'POST'])]
     #[Entity('program', options: ['id' => 'programId'])]
     #[Entity('season', options: ['id' => 'seasonId'])]
     #[Entity('episode', options: ['id' => 'episodeId'])]
-    public function showEpisode(Program $program, Season $season, Episode $episode): Response
+    public function showEpisode(Program $program, Season $season, Episode $episode, Request $request, CommentRepository $commentRepository): Response
     {
-        return $this->render('program/episode_show.html.twig', [
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAuthor($this->getUser());
+            $comment->setEpisode($episode);
+            // TODO: ask how to force default value
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $commentRepository->add($comment, true);
+
+            return $this->redirectToRoute('program_episode_show', [
+                'programId' => $program->getId(),
+                'seasonId' => $season->getId(),
+                'episodeId' => $episode->getId(),
+                ]);
+        }
+
+        return $this->renderForm('program/episode_show.html.twig', [
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
+            'form' => $form,
+            'comments' => $episode->getComments(),
         ]);
     }
 
