@@ -1,6 +1,6 @@
 <div class="card bg-dark bg-gradient shadow-lg" style="width: 50rem;">
     <div class="card-body d-flex flex-column text-white">
-        <p>Leave a comment</p>
+        <p>{{ title }}</p>
         {{ form_start(form, { 'attr': {'class': 'w-100 d-flex flex-column gap-3'} }) }}
         <div class="col d-flex align-items-center">
             {{ form_label(form.rate) }}

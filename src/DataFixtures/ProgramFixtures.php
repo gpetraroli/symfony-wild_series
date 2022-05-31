@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Program;
+use App\Entity\User;
 use App\Service\Slugify;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -29,6 +30,14 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setSynopsis($faker->realText);
             $program->setPoster('https://resizing.flixster.com/MjVssEgJGXiAeZbseh8zQ7xrSPk=/206x305/v2/https://flxt.tmsimg.com/assets/p185013_b_v8_af.jpg');
             $program->setCategory($this->getReference('category-' . mt_rand(0,9)));
+
+            // set the owners
+            if ($i < self::N_PROGRAMS / 2) {
+                $program->setOwner($this->getReference('admin'));
+            } else {
+                $program->setOwner($this->getReference('editor'));
+            }
+
             $manager->persist($program);
 
             $this->addReference('program-' . $i, $program);
@@ -41,6 +50,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CategoryFixtures::class,
+            UserFixtures::class,
         ];
     }
 }

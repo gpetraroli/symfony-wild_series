@@ -37,8 +37,11 @@ security:
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/program/new, role: ROLE_EDITOR }
+        - { path: ^/program/[a-z-]+/edit, role: ROLE_EDITOR }
 
     role_hierarchy:
+        ROLE_EDITOR: ROLE_USER
         ROLE_ADMIN: ROLE_EDITOR
 
 when@test:

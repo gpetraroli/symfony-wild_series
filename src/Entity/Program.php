@@ -49,6 +49,25 @@ class Program
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'programs')]
+    private $owner;
+
+    /**
+     * @return mixed
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param mixed $owner
+     */
+    public function setOwner($owner): void
+    {
+        $this->owner = $owner;
+    }
+
     public function __construct()
     {
         $this->seasons = new ArrayCollection();

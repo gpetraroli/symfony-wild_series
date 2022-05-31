@@ -25,11 +25,15 @@ class UserFixtures extends Fixture
         $userAdmin->setEmail('admin@wildseries.com');
         $userAdmin->setRoles(['ROLE_ADMIN']);
 
+        $this->addReference('admin', $userAdmin);
+
         $userEditor = new User();
         $hashedPassword = $this->passwordHasher->hashPassword($userEditor, '12345');
         $userEditor->setPassword($hashedPassword);
         $userEditor->setEmail('editor@wildseries.com');
         $userEditor->setRoles(['ROLE_EDITOR']);
+
+        $this->addReference('editor', $userEditor);
 
         $manager->persist($userAdmin);
         $manager->persist($userEditor);

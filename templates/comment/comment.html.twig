@@ -1,8 +1,12 @@
 <div class="card bg-dark bg-gradient shadow-lg" style="width: 50rem;">
     <div class="card-body d-flex flex-column text-white">
         <div>
-            <p class="card-text">{{ comment.rate }}</p>
+            <p class="card-text">{{ comment.author.email }}</p>
+            <p class="card-text">rate: {{ comment.rate }}</p>
             <p class="card-text">{{ comment.body }}</p>
+            {% if is_granted('ROLE_ADMIN') or app.user == comment.author %}
+                <a class="text-info" href="{{ path('comment_edit', { 'commentId': comment.id} ) }}">edit</a>
+            {% endif %}
         </div>
     </div>
 </div>

@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProgramController extends AbstractController
 {
@@ -45,6 +46,7 @@ class ProgramController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $program->setSlug($slugify->generate($program->getTitle()));
+            $program->setOwner($this->getUser());
             $programRepository->add($program, true);
 
             $userEmail = 'user@email.com';
@@ -112,8 +114,6 @@ class ProgramController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setAuthor($this->getUser());
             $comment->setEpisode($episode);
-            // TODO: ask how to force default value
-            $comment->setCreatedAt(new \DateTimeImmutable());
             $commentRepository->add($comment, true);
 
             return $this->redirectToRoute('program_episode_show', [
@@ -135,6 +135,10 @@ class ProgramController extends AbstractController
     #[Route('/program/{slug}/edit', name: 'program_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Program $program, EntityManagerInterface $entityManager): Response
     {
+        if ($this->getUser() !== $program->getOwner()) {
+            throw new AccessDeniedException('Only the owner can edit the program!');
+        }
+
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
 

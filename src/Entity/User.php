@@ -29,6 +29,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'author', targetEntity: Comment::class)]
     private $comments;
 
+    #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Program::class)]
+    private $programs;
+
+    /**
+     * @return mixed
+     */
+    public function getPrograms()
+    {
+        return $this->programs;
+    }
+
+    /**
+     * @param mixed $programs
+     */
+    public function setPrograms($programs): void
+    {
+        $this->programs = $programs;
+    }
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();

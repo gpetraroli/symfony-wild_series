@@ -14,6 +14,11 @@
                     <span>No actors found</span>
                 {% endfor %}
             </p>
+            <div>
+                {% if is_granted('ROLE_ADMIN') or program.owner == app.user  %}
+                    <a class="text-info" href="{{ path('program_edit', { 'slug': program.slug} ) }}">edit</a>
+                {% endif %}
+            </div>
         </div>
         <div>
             <ul class="list-group list-group-flush mb-3 rounded">

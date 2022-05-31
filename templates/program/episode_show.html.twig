@@ -10,7 +10,7 @@
         {% include 'episode/_episode.htm.twig' %}
 
         {% if app.user %}
-            {% include 'comment/_formNew.html.twig' %}
+            {% include 'comment/_formNew.html.twig' with {'title': 'Leave a comment'} %}
         {% endif %}
 
         {% for comment in comments %}
