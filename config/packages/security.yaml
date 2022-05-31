@@ -39,6 +39,7 @@ security:
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/program/new, role: ROLE_EDITOR }
         - { path: ^/program/[a-z-]+/edit, role: ROLE_EDITOR }
+        - { path: /my-profile, role: ROLE_USER }
 
     role_hierarchy:
         ROLE_EDITOR: ROLE_USER

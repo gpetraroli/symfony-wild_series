@@ -24,9 +24,10 @@
         {% if app.user %}
             {{ app.user.email }}
             <a class="text-info" href="{{ path('app_logout') }}"> Logout</a>
+            <a class="text-info" href="{{ path('my-profile') }}"> Profile</a>
         {% else %}
             <a class="text-info" href="{{ path('app_login') }}"> Login</a>
+            <a class="text-info" href="{{ path('app_register') }}"> Sign in</a>
         {% endif %}
-
     </div>
 </nav>
