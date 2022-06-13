@@ -4,9 +4,11 @@
             <img class="float-start pe-3 pb-3" src="{{program.poster}}" alt="{{ program.title }} poster">
             <div class="d-flex justify-content-between">
                 <h1 class="card-title">{{ program.title }}</h1>
-                <a id='watchlist' href="{{ path('program_add_to_watchlist', {id: program.id}) }}">
-                    <i class="{{ app.user.isInWatchlist(program) ? 'bi-heart-fill' : 'bi-heart' }} link-info fs-1"></i>
-                </a>
+                {% if (app.user) %}
+                    <a id='watchlist' href="{{ path('program_add_to_watchlist', {id: program.id}) }}">
+                        <i class="{{ app.user.isInWatchlist(program) ? 'bi-heart-fill' : 'bi-heart' }} link-info fs-1"></i>
+                    </a>
+                {% endif %}
             </div>
             <p class="card-text">{{ program.category.name }}</p>
             <p class="card-text">{{ program.synopsis }}</p>
