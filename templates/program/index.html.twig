@@ -7,7 +7,13 @@
         <a class="link-info" href="{{ path('app_index') }}">
             Back to home
         </a>
-        <h1 class="text-white">All TV shows</h1>
+        <h1 class="text-white">TV shows</h1>
+        <div class="container text-white">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <button type="submit" class="btn btn-outline-info">search</button>
+            {{ form_end(form) }}
+        </div>
         <div class="container-fluid d-flex justify-content-center align-items-start gap-5 flex-wrap">
             {% for program in programs %}
                 {% include 'program/_programPreview.html.twig' %}

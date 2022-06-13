@@ -20,6 +20,7 @@ class CommentController extends AbstractController
     #[Entity('comment', options: ['id' => 'commentId'])]
     public function edit(Comment $comment, Request $request, EntityManagerInterface $entityManager): Response
     {
+        // TODO: refactor condition with Voters or denyAccessUnlessGranted
         if ($this->getUser() !== $comment->getAuthor() && !in_array('ROLE_ADMIN' ,$this->getUser()->getRoles())) {
             throw new AccessDeniedException('Only the owner can edit the comment!');
         }
@@ -30,6 +31,7 @@ class CommentController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
             // TODO: ask how to redirect to previous route
+
             return $this->redirectToRoute('program_index');
         }
 

@@ -8,6 +8,7 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Form\CommentType;
 use App\Form\ProgramType;
+use App\Form\SearchProgramFormType;
 use App\Repository\CommentRepository;
 use App\Repository\ProgramRepository;
 use App\Service\Slugify;
@@ -25,12 +26,22 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 class ProgramController extends AbstractController
 {
     #[Route('/program/', name: 'program_index')]
-    public function index(ManagerRegistry $doctrine): Response
+    public function index(ManagerRegistry $doctrine, Request $request): Response
     {
-        $programs = $doctrine->getRepository(Program::class)->findAll();
+        $form = $this->createForm(SearchProgramFormType::class);
+        $form->handleRequest($request);
 
-        return $this->render('program/index.html.twig', [
+        if ($form->isSubmitted() && $form->isValid()) {
+            $programs = $doctrine->getRepository(Program::class)->findLikeTitleActorName($form->getData()['search']);
+            unset($form);
+            $form = $this->createForm(SearchProgramFormType::class);
+        } else {
+            $programs = $doctrine->getRepository(Program::class)->findAll();
+        }
+
+        return $this->renderForm('program/index.html.twig', [
             'programs' => $programs,
+            'form' => $form,
             ]);
     }
 
@@ -42,7 +53,6 @@ class ProgramController extends AbstractController
         $form = $this->createForm(ProgramType::class, $program);
 
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $program->setSlug($slugify->generate($program->getTitle()));
