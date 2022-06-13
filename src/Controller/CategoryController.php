@@ -37,6 +37,8 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted()) {
             $categoryRepository->add($category, true);
 
+            $this->addFlash('success', 'Category "' . $category->getName() . '" created.');
+
             return $this->redirectToRoute('category_index');
         }
 

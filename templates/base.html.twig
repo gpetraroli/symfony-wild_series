@@ -14,11 +14,20 @@
     {% endblock %}
 </head>
 <body>
-    <header>
-        {% include '_header.html.twig' %}
-    </header>
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="container-fluid d-flex justify-content-end fixed-bottom">
+            <div class="alert alert-{{ label }} w-25 opacity-75">
+                {{ message }}
+            </div>
+        </div>
+    {% endfor %}
+{% endfor %}
+<header>
+    {% include '_header.html.twig' %}
+</header>
 
-    {% block body %}
-    {% endblock %}
+{% block body %}
+{% endblock %}
 </body>
 </html>

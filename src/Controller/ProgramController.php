@@ -49,6 +49,8 @@ class ProgramController extends AbstractController
             $program->setOwner($this->getUser());
             $programRepository->add($program, true);
 
+            $this->addFlash('success', 'TV series created correctly.');
+
             $userEmail = 'user@email.com';
             $email = (new Email())
                 ->from('your_email@example.com')
@@ -144,6 +146,8 @@ class ProgramController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
+
+            $this->addFlash('success', '"' . $program->getTitle() . '" has been updated.');
 
             return $this->redirectToRoute('program_index', [], Response::HTTP_SEE_OTHER);
         }

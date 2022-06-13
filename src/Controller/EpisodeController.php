@@ -39,6 +39,9 @@ class EpisodeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $episode->setSlug($slugify->generate($episode->getTitle()));
             $episodeRepository->add($episode, true);
+
+            $this->addFlash('success', 'Episode created correctly.');
+
             $userEmail = 'user@email.com';
             $email = (new Email())
                 ->from('your_email@example.com')
@@ -80,6 +83,8 @@ class EpisodeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            $this->addFlash('success', 'Episode updated correctly.');
+
             return $this->redirectToRoute('app_episode_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -95,6 +100,8 @@ class EpisodeController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$episode->getId(), $request->request->get('_token'))) {
             $entityManager->remove($episode);
             $entityManager->flush();
+
+            $this->addFlash('danger', 'Episode deleted.');
         }
 
         return $this->redirectToRoute('app_episode_index', [], Response::HTTP_SEE_OTHER);
