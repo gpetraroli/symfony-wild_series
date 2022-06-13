@@ -10,3 +10,24 @@ import './styles/app.scss';
 
 // start the Stimulus application
 import './bootstrap';
+
+const linkWatchlist = document.querySelector('#watchlist');
+
+linkWatchlist.addEventListener('click', ev => {
+    ev.preventDefault();
+    const icon = linkWatchlist.querySelector('i');
+    icon.classList.toggle('bi-heart');
+    icon.classList.toggle('bi-heart-fill');
+
+    fetch(linkWatchlist.href)
+        .then(res => res.json())
+        .then(data => {
+            if (data.isInWatchlist) {
+                icon.classList.add('bi-heart-fill');
+                icon.classList.remove('bi-heart');
+            } else {
+                icon.classList.add('bi-heart');
+                icon.classList.remove('bi-heart-fill');
+            }
+        });
+});

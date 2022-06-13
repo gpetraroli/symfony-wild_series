@@ -31,7 +31,7 @@ class ProgramController extends AbstractController
 
         return $this->render('program/index.html.twig', [
             'programs' => $programs,
-            ]);
+        ]);
     }
 
     #[Route('/program/new', name: 'program_new', methods: ['GET', 'POST'])]
@@ -85,7 +85,7 @@ class ProgramController extends AbstractController
         return $this->render('program/show.html.twig', [
             'program' => $program,
             'seasons' => $seasons,
-            ]);
+        ]);
     }
 
     #[Route('program/{programId}/season/{seasonId<\d+>}', name: 'program_season_show', methods: ['GET'])]
@@ -122,7 +122,7 @@ class ProgramController extends AbstractController
                 'programId' => $program->getId(),
                 'seasonId' => $season->getId(),
                 'episodeId' => $episode->getId(),
-                ]);
+            ]);
         }
 
         return $this->renderForm('program/episode_show.html.twig', [
@@ -155,6 +155,22 @@ class ProgramController extends AbstractController
         return $this->renderForm('program/edit.html.twig', [
             'program' => $program,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/program/{id}/watchlist', name: 'program_add_to_watchlist', methods: ['GET', 'POST'])]
+    public function addToWatchlist(Program $program, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->getUser()->isInWatchlist($program)) {
+            $this->getUser()->removeFromWatchlist($program);
+        } else {
+            $this->getUser()->addToWatchlist($program);
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            'isInWatchlist' => $this->getUser()->isInWatchlist($program)
         ]);
     }
 }

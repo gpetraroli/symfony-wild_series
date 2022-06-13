@@ -34,6 +34,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'owner', targetEntity: Program::class)]
     private $programs;
 
+    #[ORM\ManyToMany(targetEntity: Program::class, mappedBy: 'viewers')]
+    #[ORM\JoinTable(name: 'watchlist')]
+    private $watchlist;
+
     /**
      * @return mixed
      */
@@ -53,6 +57,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->watchlist = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -153,5 +158,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Program>
+     */
+    public function getWatchlist(): Collection
+    {
+        return $this->watchlist;
+    }
+
+    public function addToWatchlist(Program $watchlist): self
+    {
+        if (!$this->watchlist->contains($watchlist)) {
+            $this->watchlist[] = $watchlist;
+            $watchlist->addViewer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFromWatchlist(Program $watchlist): self
+    {
+        if ($this->watchlist->removeElement($watchlist)) {
+            $watchlist->removeViewer($this);
+        }
+
+        return $this;
+    }
+
+    public function isInWatchlist(Program $program): bool
+    {
+        return $this->getWatchlist()->contains($program);
     }
 }

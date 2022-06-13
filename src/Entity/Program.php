@@ -52,6 +52,9 @@ class Program
     #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'programs')]
     private $owner;
 
+    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'watchlist')]
+    private $viewers;
+
     /**
      * @return mixed
      */
@@ -72,6 +75,7 @@ class Program
     {
         $this->seasons = new ArrayCollection();
         $this->actors = new ArrayCollection();
+        $this->viewers = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,6 +201,30 @@ class Program
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getViewers(): Collection
+    {
+        return $this->viewers;
+    }
+
+    public function addViewer(User $viewer): self
+    {
+        if (!$this->viewers->contains($viewer)) {
+            $this->viewers[] = $viewer;
+        }
+
+        return $this;
+    }
+
+    public function removeViewer(User $viewer): self
+    {
+        $this->viewers->removeElement($viewer);
 
         return $this;
     }
